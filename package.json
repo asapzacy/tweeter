@@ -1,18 +1,25 @@
 {
   "name": "tweeter",
   "version": "0.1.0",
+  "description": "coding challenge",
   "private": true,
-  "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
-  },
-  "devDependencies": {
-    "react-scripts": "0.9.5"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "eject": "react-scripts eject",
+    "wake": "atom . && open http://localhost:3000 && yarn start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.5.4",
+    "react-router": "3.0.2",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "homepage": "http://zacarellano.github.io/tweeter"
 }
