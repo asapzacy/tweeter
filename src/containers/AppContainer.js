@@ -14,10 +14,11 @@ class AppContainer extends Component {
       isLoading: true,
       isError: false,
       text: '',
-      tweets: []
+      tweets: [],
+      top10: [],
+      sum: 0
     }
     this.updateText = this.updateText.bind(this)
-    this.updateFocus = this.updateFocus.bind(this)
   }
   componentDidMount() {
     window.addEventListener('keydown', (event) => {
@@ -30,10 +31,6 @@ class AppContainer extends Component {
   }
   updateText(event) {
     this.setState({ text: event.target.value })
-  }
-  updateFocus(event) {
-    console.log(event)
-    this.setState({ isFocused: true })
   }
   makeRequest() {
     getTweets(this.state.text)
@@ -60,19 +57,13 @@ class AppContainer extends Component {
       const tweet = arr[i].split(' ')
       for (let j = 0; j < tweet.length; j++) {
         let word = tweet[j]
-        // word = word.split('.').join('')
-        // word = word.split('\"').join('')
-        // word = word.split('\'').join('')
-        // word = word.split(')').join('')
-        // word = word.split('(').join('')
-        // word = word.split(',').join('')
-        // word.replace(/[^\w\s!?]/g,'');
         if (word.includes('http') || word.includes('@') || word.includes('#')) {
           word = ''
         }
-        word = word.replace(/[^a-zA-Z-']+/g, '')
-
-
+        word = word.replace(/[^a-zA-Z-']+/g,'')
+        if (word === 'amp') {
+          word = '&'
+        }
         if (word) {
           hash[word] = (hash[word] || 0) + 1
         }
@@ -80,12 +71,11 @@ class AppContainer extends Component {
     }
     const result = Object.keys(hash).map(el => ({ word: el, count: hash[el] }))
     const x = result.sort((a, b) => b.count - a.count).slice(0,10)
-    console.log(x)
-    // for (let item in hash) {
-    //   result.push({ item: hash[item] })
-    // }
-    // console.log(result)
-    console.log(hash)
+    const sum = x.reduce((a, b) => a + b.count, 0)
+    this.setState({
+      top10: x,
+      sum
+     })
   }
   render() {
     return (
