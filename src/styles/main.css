@@ -79,14 +79,14 @@ a:hover::after {
 }
 
 .bar {
-  display:block;
+  /*display:block;
   height:2px;width:0;
   position:absolute;
   bottom:0;left:0;right:0;
   margin:0 auto;
   opacity:0;
   background:mediumslateblue;
-  transition:opacity 0.44s, width 0.44s;
+  transition:opacity 0.44s, width 0.44s;*/
 }
 .search:focus ~ .bar {
   width:100%;
@@ -98,6 +98,22 @@ a:hover::after {
 :-moz-placeholder { color:#6d6d6d }
 
 
+
+.graphContainer {
+  height:333px;
+  width:100%;
+  background:mediumslateblue;
+  margin-bottom:10em;
+  border:2px solid #070707;
+}
+.svgg {
+  width:100%;
+  height:100%;
+  padding:1%;
+}
+.bar {
+
+}
 
 
 

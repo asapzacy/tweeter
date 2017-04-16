@@ -70,7 +70,7 @@ class AppContainer extends Component {
       }
     }
     const result = Object.keys(hash).map(el => ({ word: el, count: hash[el] }))
-    const x = result.sort((a, b) => b.count - a.count).slice(0,10)
+    const x = result.sort((a, b) => b.count - a.count).slice(0,15)
     const sum = x.reduce((a, b) => a + b.count, 0)
     this.setState({
       top10: x,
