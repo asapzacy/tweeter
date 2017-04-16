@@ -8,7 +8,7 @@ const NotFoundContainer = () => <div className='notFoundContainer'>{'404'}</div>
 const routes = (
   <Router history={browserHistory}>
     <Route path='/' component={AppContainer}>
-      <IndexRoute component={HomeContainer} />
+      <Route path='/:user' component={AppContainer} />
       <Route path='*' component={NotFoundContainer} />
     </Route>
   </Router>

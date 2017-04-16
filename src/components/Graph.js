@@ -1,14 +1,12 @@
 import React from 'react'
-import Bar from './Bar'
+import { BarChart } from 'react-easy-chart'
 
-const Graph = ({ top10 }) => (
-  <div className='graphContainer'>
-    <svg className='svgg'>
-      <g height="1000px">
-        { top10.map((el, i) => <Bar x={`${(i * 10) + 0.5}%`} y={`calc(100% - ${el.count}%`} width={'9%'} height={`${el.count}%`} key={i} />) }
-      </g>
-    </svg>
-  </div>
+const Graph = ({ tweets }) => (
+  <section className='graphContainer'>
+    <BarChart colorBars axes height={window.innerHeight * 0.5} width={window.innerWidth * 0.75}
+      data={ tweets.map((el, i) => ({ x: el.word, y: el.count }) ) }
+    />
+  </section>
 )
 
 export default Graph

@@ -9,36 +9,40 @@ class AppContainer extends Component {
   constructor() {
     super()
     this.state = {
-      isEntered: false,
-      isFocused: false,
-      isLoading: true,
+      isLoading: false,
       isError: false,
-      text: '',
+      user: '',
       tweets: [],
-      top10: [],
-      sum: 0
+      tweetsCount: 0
     }
-    this.updateText = this.updateText.bind(this)
+    this.updateUser = this.updateUser.bind(this)
+    this.makeRequest = this.makeRequest.bind(this)
   }
   componentDidMount() {
+    const user = this.props.params.user
+    if (user) {
+      this.setState({ user }, () => this.makeRequest())
+    }
     window.addEventListener('keydown', (event) => {
-      if (event.keyCode === 13) {
-        this.setState({ isEntered: this.state.text && !this.state.isEntered }, () => {
-          this.makeRequest()
-        })
+      if (event.keyCode === 13 && this.state.user) {
+        this.makeRequest()
       }
     })
   }
-  updateText(event) {
-    this.setState({ text: event.target.value })
+  updateUser(event) {
+    this.setState({ user: event.target.value })
   }
   makeRequest() {
-    getTweets(this.state.text)
-      .then((tweets) => {
+    this.setState({ isLoading: true })
+    console.log(this)
+    this.context.router.push('/' + this.state.user)
+    getTweets(this.state.user)
+      .then((data) => {
+        data = this.sanitizeData(data)
         this.setState({
           isLoading: false,
-          tweets
-        }, () => this.test())
+          tweets: data
+        })
       })
       .catch((error) => {
         this.setState({
@@ -47,8 +51,8 @@ class AppContainer extends Component {
         })
       })
   }
-  test() {
-    const arr = this.state.tweets.reduce((arr, el) => {
+  sanitizeData(tweets) {
+    const arr = tweets.reduce((arr, el) => {
       arr.push(el.text)
       return arr
     }, [])
@@ -56,8 +60,8 @@ class AppContainer extends Component {
     for (let i = 0; i < arr.length; i++) {
       const tweet = arr[i].split(' ')
       for (let j = 0; j < tweet.length; j++) {
-        let word = tweet[j]
-        if (word.includes('http') || word.includes('@') || word.includes('#')) {
+        let word = tweet[j].toLowerCase()
+        if (word.includes('http') || word.includes('@') || word.includes('#') || word === '-') {
           word = ''
         }
         word = word.replace(/[^a-zA-Z-']+/g,'')
@@ -70,19 +74,17 @@ class AppContainer extends Component {
       }
     }
     const result = Object.keys(hash).map(el => ({ word: el, count: hash[el] }))
-    const x = result.sort((a, b) => b.count - a.count).slice(0,15)
+    const x = result.sort((a, b) => b.count - a.count).slice(0,10).sort((a,b) => a.word === b.word ? 0 : a.word < b.word ? -1 : 1)
     const sum = x.reduce((a, b) => a + b.count, 0)
-    this.setState({
-      top10: x,
-      sum
-     })
+    console.log(x)
+    return x
   }
   render() {
     return (
       <div className='appContainer'>
         <Header />
         <main className='mainContainer'>
-          <Search {...this.state} updateText={this.updateText} updateFocus={this.updateFocus} />
+          <Search {...this.state} updateUser={this.updateUser} makeRequest={this.makeRequest} />
           <Tweets {...this.state} />
         </main>
       </div>
@@ -91,3 +93,7 @@ class AppContainer extends Component {
 }
 
 export default AppContainer
+
+AppContainer.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}

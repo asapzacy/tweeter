@@ -1,7 +1,7 @@
 
 /* -------  all links  ------- */
 a {
-  color:mediumslateblue;
+  color:#121212;
   font-weight:500;
   position:relative;
 }
@@ -10,7 +10,7 @@ a::after {
   content:'';
   display:block;
   height:2px;
-  background:mediumslateblue;
+  background:#121212;
   opacity:0;
   position:absolute;
   bottom:12px;left:0;right:0;
@@ -77,16 +77,22 @@ a:hover::after {
   height:4em;
   width:100%;
 }
+.buttonContainer {
 
-.bar {
-  /*display:block;
+}
+.button {
+
+}
+
+.inputContainer .bar {
+  display:block;
   height:2px;width:0;
   position:absolute;
   bottom:0;left:0;right:0;
   margin:0 auto;
   opacity:0;
-  background:mediumslateblue;
-  transition:opacity 0.44s, width 0.44s;*/
+  background:#121212;
+  transition:opacity 0.44s, width 0.44s;
 }
 .search:focus ~ .bar {
   width:100%;
@@ -100,19 +106,10 @@ a:hover::after {
 
 
 .graphContainer {
-  height:333px;
-  width:100%;
-  background:mediumslateblue;
-  margin-bottom:10em;
-  border:2px solid #070707;
+  text-align:center;
 }
-.svgg {
-  width:100%;
-  height:100%;
-  padding:1%;
-}
-.bar {
-
+.graphContainer svg .axis {
+  font-size:12px;
 }
 
 
@@ -123,7 +120,6 @@ a:hover::after {
 .mainContainer {
   width:96%;
   height:100%;
-  max-width:1600px;
 }
 
 

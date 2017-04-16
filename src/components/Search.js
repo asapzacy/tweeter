@@ -1,12 +1,11 @@
 import React from 'react'
+import Input from './Input'
+import Button from './Button'
 
-const Search = ({ text, updateText }) => (
+const Search = ({ updateUser, user, makeRequest }) => (
   <section className='searchContainer'>
-    <div className='inputContainer'>
-      <span className='icon'>{'@'}</span>
-      <input className='search' onChange={updateText} value={text} type={'text'} spellCheck={false} placeholder={'jack'} />
-      <span className='bar'></span>
-    </div>
+    <Input updateUser={updateUser} user={user} />
+    <Button makeRequest={makeRequest} />
   </section>
 )
 
