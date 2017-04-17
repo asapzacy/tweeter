@@ -13,7 +13,8 @@ class AppContainer extends Component {
       isError: false,
       user: '',
       tweets: [],
-      tweetsCount: 0
+      tweetsCount: 0,
+      wordsCount: 0
     }
     this.updateUser = this.updateUser.bind(this)
     this.makeRequest = this.makeRequest.bind(this)
@@ -21,12 +22,11 @@ class AppContainer extends Component {
   componentDidMount() {
     let user = this.props.params.user
     if (user) {
-      this.setState({ user })
+      this.setState({ user }, () => this.makeRequest())
     } else {
       this.setState({ user: '' })
     }
     this.init()
-    this.makeRequest()
   }
   init() {
     window.addEventListener('keydown', (event) => {
@@ -36,18 +36,11 @@ class AppContainer extends Component {
     })
   }
   componentWillReceiveProps(nextProps) {
-    console.log('will')
-    console.log(true)
-    console.log(nextProps)
     let user = nextProps.params.user
     if (!user) {
       this.setState({ user: '', tweets: [] })
     }
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('updated')
-  //   return true
-  // }
   updateUser(event) {
     this.setState({ user: event.target.value })
   }
@@ -59,10 +52,13 @@ class AppContainer extends Component {
     this.context.router.push('/' + this.state.user)
     getTweets(this.state.user)
       .then((data) => {
-        data = this.sanitizeData(data)
+        data = this.sanitizeTweets(data)
+        data = this.sortTweets(data)
+        let count = this.countTweets(data)
         this.setState({
           isLoading: false,
-          tweets: data
+          tweets: data,
+          tweetsCount: count
         })
       })
       .catch((error) => {
@@ -72,12 +68,13 @@ class AppContainer extends Component {
         })
       })
   }
-  sanitizeData(tweets) {
+  sanitizeTweets(tweets) {
     const arr = tweets.reduce((arr, el) => {
       arr.push(el.text)
       return arr
     }, [])
     const hash = {}
+    let wordsCount = 0
     for (let i = 0; i < arr.length; i++) {
       const tweet = arr[i].split(' ')
       for (let j = 0; j < tweet.length; j++) {
@@ -91,13 +88,20 @@ class AppContainer extends Component {
         }
         if (word) {
           hash[word] = (hash[word] || 0) + 1
+          wordsCount += 1
         }
       }
     }
-    const result = Object.keys(hash).map(el => ({ word: el, count: hash[el] }))
-    const x = result.sort((a, b) => b.count - a.count).slice(0,10).sort((a,b) => a.word === b.word ? 0 : a.word < b.word ? -1 : 1)
-    const sum = x.reduce((a, b) => a + b.count, 0)
-    return x
+    this.setState({ wordsCount })
+    return hash
+  }
+  sortTweets(tweets) {
+    const hashArr = Object.keys(tweets).map(el => ({ word: el, count: tweets[el] }))
+    const topTweets = hashArr.sort((a, b) => b.count - a.count).slice(0,10).sort((a,b) => a.word === b.word ? 0 : a.word < b.word ? -1 : 1)
+    return topTweets
+  }
+  countTweets(tweets) {
+    return tweets.reduce((a, b) => a + b.count, 0)
   }
   render() {
     return (
@@ -105,7 +109,7 @@ class AppContainer extends Component {
         <Header />
         <main className='mainContainer'>
           <Search {...this.state} updateUser={this.updateUser} makeRequest={this.makeRequest} />
-          { this.props.children }
+          <Tweets {...this.state} />
         </main>
       </div>
     )
