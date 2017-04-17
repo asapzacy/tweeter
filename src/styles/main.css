@@ -80,7 +80,6 @@ strong { font-weight:500 }
   flex:1;
   align-items:center;
   flex-direction:column;
-  justify-content:space-between;
 }
 
 /* -------  search container  ------- */
@@ -171,8 +170,9 @@ strong { font-weight:500 }
 
 /* -------  info container  ------- */
 .infoContainer {
-  margin-bottom:9%;
+  margin-top:4%;
   line-height:1;
+  font-size:1.2em;
 }
 
 /* -------  other container  ------- */

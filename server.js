@@ -3,7 +3,6 @@ const express = require('express')
 const Twitter = require('twitter')
 const compression = require('compression')
 const cors = require('cors')
-// const fs = require('fs')
 const app = express()
 const port = process.env.PORT || 9090
 
@@ -19,7 +18,11 @@ const client = new Twitter({
 
 
 app.get('/api', (req, res) => {
-  const params = { screen_name: req.query.user, count: 3200, include_rts: false }
+  const params = {
+    screen_name: req.query.user,
+    count: 3200,
+    include_rts: false
+  }
   client.get('statuses/user_timeline', params, (error, tweets, response) => {
     res.end(JSON.stringify(tweets))
   })
