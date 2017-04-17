@@ -3,10 +3,10 @@ import Loading from './Loading'
 import Graph from './Graph'
 import Info from './Info'
 
-const Tweets = ({ isLoading, tweets, user, tweetsCount, wordsCount }) => (
+const Tweets = ({ isLoading, tweets, user, twitterUser, tweetsCount, wordsCount }) => (
   <main>
     { (isLoading && user) ? <Loading /> : <Graph tweets={tweets} /> }
-    { (tweets.length && !isLoading) ? <Info user={user} tweetsCount={tweetsCount} wordsCount={wordsCount} /> : '' }
+    { tweets.length ? <Info twitterUser={twitterUser} tweetsCount={tweetsCount} wordsCount={wordsCount} /> : '' }
   </main>
 )
 

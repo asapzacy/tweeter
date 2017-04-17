@@ -75,7 +75,7 @@ main {
 
 
 .searchContainer div {
-  margin:0 2.2em;
+  margin:0 1.6em;
 }
 
 .searchContainer {
@@ -111,21 +111,18 @@ main {
   background:inherit;
   border:1px solid #070707;
   font-size:2em;
-  font-weight:300;
-  padding:0.2em 0.8em;
+  line-height:1;
+  padding:0 0.8em 2px 0.8em;
   transition:0.22s color,0.22s background,0.22s box-shadow;
-
 }
-.button:hover {
+.button:hover, .button:focus {
   cursor:pointer;
   color:#f5f5f5;
   background:#070707;
+  outline:0;
   box-shadow: inset 0 0 0 0.125em #f5f5f5;
 }
-.button:focus {
-  outline:0;
-}
-
+a.focus { outline:0 }
 .inputContainer .bar {
   display:block;
   height:2px;width:0;
@@ -144,7 +141,75 @@ main {
 ::-moz-placeholder { color:#6d6d6d }
 :-ms-input-placeholder { color:#6d6d6d }
 :-moz-placeholder { color:#6d6d6d }
+/* Place Holder CSS */
+::-webkit-input-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:-moz-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+::-moz-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:-ms-input-placeholder {
+  color: #000;
+  opacity: 0.5;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
 
+/* Place Holder CSS for Focus */
+:hover::-webkit-input-placeholder {
+  opacity: 0.75;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover:-moz-placeholder {
+  opacity: 0.75;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover::-moz-placeholder {
+  opacity: 0.75;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:hover:-ms-input-placeholder {
+  opacity: 0.75;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+
+/* Place Holder CSS for Focus */
+:focus::-webkit-input-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus:-moz-placeholder {
+  opacity: 0;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus::-moz-placeholder {
+  opacity: 0;
+  -moz-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
+:focus:-ms-input-placeholder {
+  opacity: 0;
+  -ms-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out;
+}
 
 
 .graphContainer {

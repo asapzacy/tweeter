@@ -12,6 +12,7 @@ class AppContainer extends Component {
       isLoading: false,
       isError: false,
       user: '',
+      twitterUser: '',
       tweets: [],
       tweetsCount: 0,
       wordsCount: 0
@@ -69,6 +70,8 @@ class AppContainer extends Component {
       })
   }
   sanitizeTweets(tweets) {
+    let twitterUser = tweets[0].user.screen_name
+    this.setState({ twitterUser })
     const arr = tweets.reduce((arr, el) => {
       arr.push(el.text)
       return arr
