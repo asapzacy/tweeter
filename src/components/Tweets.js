@@ -2,10 +2,10 @@ import React from 'react'
 import Loading from './Loading'
 import Graph from './Graph'
 
-const Tweets = ({ isLoading, tweets }) => {
+const Tweets = ({ isLoading, tweets, user }) => {
   return (
     <main>
-      { isLoading
+      { isLoading && user
         ? <Loading />
         : <Graph tweets={tweets} />
       }

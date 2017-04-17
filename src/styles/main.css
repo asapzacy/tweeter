@@ -52,9 +52,25 @@ a:hover::after {
   height:3px;
 }
 
+/* -------  main container  ------- */
+.mainContainer {
+  width:96%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+main {
+  display:flex;
+  flex:1;
+  align-items:center;
+}
+
+
 
 .searchContainer {
   height:25%;
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -107,6 +123,7 @@ a:hover::after {
 
 .graphContainer {
   text-align:center;
+  margin:0 auto;
 }
 .graphContainer svg .axis {
   font-size:12px;
@@ -114,13 +131,6 @@ a:hover::after {
 
 
 
-
-
-/* -------  main container  ------- */
-.mainContainer {
-  width:96%;
-  height:100%;
-}
 
 
 
@@ -145,7 +155,7 @@ a:hover::after {
 .otherContainer {
   height:20em;
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
 }
 

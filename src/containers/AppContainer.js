@@ -19,22 +19,43 @@ class AppContainer extends Component {
     this.makeRequest = this.makeRequest.bind(this)
   }
   componentDidMount() {
-    const user = this.props.params.user
+    let user = this.props.params.user
     if (user) {
-      this.setState({ user }, () => this.makeRequest())
+      this.setState({ user })
+    } else {
+      this.setState({ user: '' })
     }
+    this.init()
+    this.makeRequest()
+  }
+  init() {
     window.addEventListener('keydown', (event) => {
       if (event.keyCode === 13 && this.state.user) {
         this.makeRequest()
       }
     })
   }
+  componentWillReceiveProps(nextProps) {
+    console.log('will')
+    console.log(true)
+    console.log(nextProps)
+    let user = nextProps.params.user
+    if (!user) {
+      this.setState({ user: '', tweets: [] })
+    }
+  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('updated')
+  //   return true
+  // }
   updateUser(event) {
     this.setState({ user: event.target.value })
   }
   makeRequest() {
+    if (!this.state.user) {
+      return
+    }
     this.setState({ isLoading: true })
-    console.log(this)
     this.context.router.push('/' + this.state.user)
     getTweets(this.state.user)
       .then((data) => {
@@ -76,7 +97,6 @@ class AppContainer extends Component {
     const result = Object.keys(hash).map(el => ({ word: el, count: hash[el] }))
     const x = result.sort((a, b) => b.count - a.count).slice(0,10).sort((a,b) => a.word === b.word ? 0 : a.word < b.word ? -1 : 1)
     const sum = x.reduce((a, b) => a + b.count, 0)
-    console.log(x)
     return x
   }
   render() {
@@ -85,7 +105,7 @@ class AppContainer extends Component {
         <Header />
         <main className='mainContainer'>
           <Search {...this.state} updateUser={this.updateUser} makeRequest={this.makeRequest} />
-          <Tweets {...this.state} />
+          { this.props.children }
         </main>
       </div>
     )
