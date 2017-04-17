@@ -8,7 +8,7 @@ const Info = ({ twitterUser, tweetsCount, wordsCount }) => (
       {` tweets / `}
       <strong>{wordsCount.toLocaleString()}</strong>
       {' words from '}
-      <Link to={`https://twitter.com/${twitterUser}`}>{`@${twitterUser}`}</Link>
+      <a href={`https://twitter.com/${twitterUser}`}>{`@${twitterUser}`}</a>
       {'.'}
     </p>
   </section>
