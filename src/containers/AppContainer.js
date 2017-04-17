@@ -21,13 +21,13 @@ class AppContainer extends Component {
     this.makeRequest = this.makeRequest.bind(this)
   }
   componentDidMount() {
+    this.init()
     let user = this.props.params.user
     if (user) {
       this.setState({ user }, () => this.makeRequest())
     } else {
-      this.setState({ user: '' })
+      this.setState({ user: '' }, () => this.makeRequest())
     }
-    this.init()
   }
   init() {
     window.addEventListener('keydown', (event) => {
@@ -39,7 +39,10 @@ class AppContainer extends Component {
   componentWillReceiveProps(nextProps) {
     let user = nextProps.params.user
     if (!user) {
-      this.setState({ user: '', tweets: [] })
+      this.setState({ user: '', tweets: [], isError: false })
+    }
+    if (user && user.includes(' ')) {
+      this.setState({ isError: true })
     }
   }
   updateUser(event) {
@@ -49,8 +52,8 @@ class AppContainer extends Component {
     if (!this.state.user) {
       return
     }
-    this.setState({ isLoading: true })
-    this.context.router.push('/' + this.state.user)
+    this.setState({ isLoading: true, isError: false })
+    this.context.router.push(`/${this.state.user}`)
     getTweets(this.state.user)
       .then((data) => {
         data = this.sanitizeTweets(data)

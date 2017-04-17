@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import React from 'react'
+import { Router, Route, browserHistory } from 'react-router'
 import AppContainer from '../containers/AppContainer'
-
-const NotFoundContainer = () => <div className='notFoundContainer'>{'404'}</div>
 
 const routes = (
   <Router history={browserHistory}>
     <Route path='/' component={AppContainer}>
-      <Route path='/:user' component={AppContainer} />
-      <Route path='*' component={NotFoundContainer} />
+      <Route path=':user' component={AppContainer} />
     </Route>
   </Router>
 )
