@@ -1,12 +1,12 @@
 # tweeter
 
-![tweeter preview](https://zac.codes/img/other/tweeter_preview.png)
+![tweeter preview](https://zac.codes/assets/img/projects/tweeter_preview-xlarge.jpg)
 
 A coding challenge to interact with the Twiiter API. The user inputs a Twitter username, the app fetches all of the users' tweets, and outputs a graph showing the most common used words.
 
 ## Usage
 ```
-git clone https://github.com/zacarellano/tweeter.git
+git clone https://github.com/asapzacy/tweeter.git
 cd tweeter
 yarn                # npm install
 yarn start          # npm run start
